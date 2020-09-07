@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="author" content="Nathan Eigbe">
+  <script>
+    //document.getElementById("username").setAttribute("value","A");
+    function clear() {
+      alert("Howdy")
+      document.getElementByName("username").value = "lll"
+    }
+
+    function validate() {
+      alert("Validating")
+      const username = document.getElementById("username").value
+      const email = document.getElementById("email").value
+      const number = document.getElementById("number").value
+      const date = document.getElementById("dob").value
+      const zip = document.getElementById("zip").value
+      const password = document.getElementById("password").value
+      const passwordCon = document.getElementById("confirm").value
+      let valid = true
+      if(!validName(username)) {
+        alert("Please Enter Valid Username")
+        valid = false
+      }
+      if(!validEmail(email)){
+        alert("Please Enter Valid Email Address")
+
+        valid = false
+      }
+      if(!validNumber(number)) {
+        alert("Please Enter a Valid Phone Number")
+        valid = false
+      }
+      if(!validDate(date)) {
+        valid = false
+      }
+      if(!validZip(zip)) {
+        alert("Please Enter a Valid Zip Code")
+        valid = false
+      }
+      if(!validPasswords(password,passwordCon)) {
+        valid = false
+      }
+      return valid
+    }
+
+    function validName(username) {
+      return username.match(/^[a-z0-9]+$/i) !== null
+              && username.substr(0, 1).match(/[0-9]/) === null
+              && username !== ""
+              && username.trim() === username;
+    }
+
+    function validEmail(email) {
+      if(email === "" || email.trim() !== email) {
+        return false
+      }
+      if(email.split("@").length === 2 && email.split(".").length === 2 && email.lastIndexOf("@") < email.lastIndexOf(".")) {
+        const emailName = email.split("@")[0]
+        const siteName = email.split("@")[1].split(".")[0]
+        const siteExtension = email.split("@")[1].split(".")[1]
+        return emailName.match(/^[a-z0-9]+$/i) !== null
+                && emailName !== "" && emailName.trim() === emailName
+                && siteName.match(/^[a-z0-9]+$/i) !== null
+                && siteName !== "" && siteName.trim() === siteName
+                && siteExtension.match(/^[a-z0-9]+$/i) !== null
+                && siteExtension !== "" && siteExtension.trim() === siteExtension;
+      } else {
+        return false
+      }
+    }
+
+    function validNumber(number) {
+      if(number === "" || number.trim() !== number) {
+        return false
+      }
+      if(number.split("-").length === 3) {
+        const num = number.split("-")[0] + number.split("-")[1] + number.split("-")[2]
+        return num.length === 10 && num.match(/^[z0-9]+$/i) !== null
+      } else if(number.split("-").length === 1) {
+        return number.length === 10 && number.match(/^[z0-9]+$/i) !== null
+      } else {
+        return false
+      }
+    }
+
+    function validDate(dateString) {
+      const date = Date(dateString)
+      console.log(date)
+      console.log(isNaN(date))
+      if(dateString.split("/").length !== 3
+        || dateString.split("/")[0].match(/^[z0-9]+$/) === null
+              || dateString.split("/")[0].length !== 2
+              || dateString.split("/")[1].match(/^[z0-9]+$/) === null
+              || dateString.split("/")[1].length !== 2
+              || dateString.split("/")[2].match(/^[z0-9]+$/) === null
+              || dateString.split("/")[2].length !== 4) {
+        alert("Please Enter Valid Date")
+        return false
+      } else if(new Date() -  (18 * 31540000000) < date) {
+        alert("You Are Underage")
+        return false
+      } else {
+        return true
+      }
+    }
+
+    function validZip(zipCode) {
+      return zipCode.match(/^[z0-9]+$/) !== null && zipCode !== ""
+    }
+
+    function validPasswords(password, confirmation) {
+      if(password === "" || password.trim() !== password) {
+        alert("Please enter a password")
+        return false
+      } else if(confirmation === "" || confirmation.trim() !== password) {
+        alert("Please confirm password")
+        return false
+      } else if(password !== confirmation) {
+        alert("Password confirmation failed")
+        return false
+      } else {
+        return true
+      }
+
+    }
+
+
+    
+  </script>
+</head>
+<body>
+
+<h1>Dolphin Hit Network</h1>
+
+<form method="get" id="form" onsubmit="return validate()" action="formProcessor.html">
+  <label for="username">Username</label><br>
+  <input type="text" id="username" name="username" value=""><br>
+  <label for="display">Display Name (Optional)</label><br>
+  <input type="text" id="display" name="display" value=""><br>
+  <label for="email">E-Mail Address</label><br>
+  <input type="text" id="email" name="email" placeholder="abc@def.ghi" value=""><br>
+  <label for="number">Phone Number</label><br>
+  <input type="text" id="number" name="number" placeholder="123-456-7890" value=""><br>
+  <label for="dob">Date of Birth</label><br>
+  <input type="text" id="dob" name="dob" placeholder="MM/DD/YYYY" value=""><br>
+  <label for="zip">Zip Code</label><br>
+  <input type="text" id="zip" name="zip" value=""><br>
+  <label for="password">Password</label><br>
+  <input type="password" id="password" name="password" value=""><br>
+  <label for="confirm">Confirm Password</label><br>
+  <input type="password" id="confirm" value=""><br>
+  <input type="reset" value="Clear">
+  <input type="submit" value="Submit">
+</form>
+</body>
+
+</html>

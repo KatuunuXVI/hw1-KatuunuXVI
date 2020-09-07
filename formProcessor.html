@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Nathan Eigbe" >
+    <meta name="username">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // https://www.w3schools.com/code/tryit.asp?filename=GIHIU6U1A76B
+    console.log("Url: " + decodeURIComponent(location.search.substring(1).split("&").map(x => {
+        const eqInd = x.indexOf("=")
+
+        return x.substring(eqInd+1)
+    })))
+    console.log("Url: " + location.search.substring(1).indexOf("="))
+</script>
+</body>
+</html>
